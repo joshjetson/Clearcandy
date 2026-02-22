@@ -7,10 +7,13 @@ class CurrentPlaylist::Songs::GenresController < ApplicationController
     song_ids = Song.joins(:album).where(albums: { genre: params[:id] }).ids
     @current_playlist.replace(song_ids)
 
-    redirect_to current_playlist_songs_path(
-      should_play: true,
-      shuffle: params[:shuffle]
-    )
+    @playlist = @current_playlist
+    @songs = @playlist.songs_with_favorite
+    @should_play = true
+    @should_play_song_id = nil
+    @shuffle = params[:shuffle] == "true"
+
+    render "current_playlist/songs/index", layout: "playlist"
   end
 
   private
