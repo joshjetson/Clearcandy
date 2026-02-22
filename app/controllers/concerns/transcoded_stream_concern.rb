@@ -19,7 +19,7 @@ module TranscodedStreamConcern
     response.headers["Content-Type"] = Mime[Stream::TRANSCODE_FORMAT]
 
     send_stream(filename: "#{@stream.name}.mp3") do |stream_response|
-      File.open(@stream.transcode_cache_file_path, "w") do |file|
+      File.open(@stream.transcode_cache_file_path, "wb") do |file|
         @stream.each do |data|
           stream_response.write data
           file.write data

@@ -37,6 +37,8 @@ export default class extends Controller {
     this.handleEvent('player:pause', { with: this.#setPauseStatus })
     this.handleEvent('player:stop', { with: this.#setStopStatus })
     this.handleEvent('player:end', { with: this.#setEndStatus })
+    this.handleEvent('player:loaderror', { with: this.#handlePlayError })
+    this.handleEvent('player:playerror', { with: this.#handlePlayError })
   }
 
   play () {
@@ -137,6 +139,7 @@ export default class extends Controller {
   }
 
   #setPlayingStatus = () => {
+    this._errorRetryCount = 0
     const { currentSong } = this
     const favoriteSongUrl = `/favorite_playlist/songs?song_id=${currentSong.id}`
     const unFavoriteSongUrl = `/favorite_playlist/songs/${currentSong.id}`
@@ -196,6 +199,23 @@ export default class extends Controller {
         break
       default:
         this.next()
+    }
+  }
+
+  #handlePlayError = () => {
+    this.#clearTimerInterval()
+
+    if (!this._errorRetryCount) { this._errorRetryCount = 0 }
+
+    this._errorRetryCount++
+
+    if (this._errorRetryCount <= 1) {
+      // Retry once — the Howl instance was already unloaded in player.js
+      setTimeout(() => { this.player.play() }, 1000)
+    } else {
+      // Give up on this song, skip to next
+      this._errorRetryCount = 0
+      this.next()
     }
   }
 

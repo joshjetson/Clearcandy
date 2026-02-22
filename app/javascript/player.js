@@ -25,7 +25,17 @@ class Player {
         onplay: () => { dispatchEvent(document, 'player:playing') },
         onpause: () => { dispatchEvent(document, 'player:pause') },
         onend: () => { dispatchEvent(document, 'player:end') },
-        onstop: () => { dispatchEvent(document, 'player:stop') }
+        onstop: () => { dispatchEvent(document, 'player:stop') },
+        onloaderror: (_id, error) => {
+          song.howl.unload()
+          song.howl = null
+          dispatchEvent(document, 'player:loaderror', { error })
+        },
+        onplayerror: (_id, error) => {
+          song.howl.unload()
+          song.howl = null
+          dispatchEvent(document, 'player:playerror', { error })
+        }
       })
     }
 

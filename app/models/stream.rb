@@ -30,8 +30,9 @@ class Stream
     command = [ "ffmpeg", "-i", file_path, "-map", "0:0", "-v", "0", "-ab", "#{Setting.transcode_bitrate}k", "-f", TRANSCODE_FORMAT, "-" ]
     # need add error raise when can not found ffmpeg command.
     IO.popen(command) do |io|
-      while (line = io.gets)
-        yield line
+      io.binmode
+      while (chunk = io.read(16384))
+        yield chunk
       end
     end
   end
