@@ -12,6 +12,7 @@
     <title><%= content_for?(:title) ? yield(:title) : t(:app_name) %></title>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag "link_icon.png", type: "image/png" %>
+    <link rel="apple-touch-icon" href="<%= image_path("clearcandy-192.png") %>">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= yield(:head) %>

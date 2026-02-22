@@ -1,16 +1,23 @@
 <p align='center'>
-  <img alt='Clear Candy logo' width='200' src='https://raw.githubusercontent.com/blackcandy-org/black_candy/master/app/assets/images/logo.svg'>
+  <img alt='Clearcandy logo' width='200' src='https://i.imgur.com/SbNyIBN.png'>
 </p>
 
-# Clear Candy
+# Clearcandy
 
 A self-hosted music streaming server — your personal music center.
 
-Forked from [Black Candy](https://github.com/blackcandy-org/black_candy) with the goal of improved reliability and new features.
+Forked from [Black Candy](https://github.com/blackcandy-org/black_candy) with improved reliability and new features.
+
+### What's New
+
+- **Browse by Genre** — explore your library organized by genre with album and song counts
+- **Play by Genre** — play all songs in a genre with one click
+- **Shuffle Play** — shuffle any genre collection directly from the genre page
+- **PWA Support** — install as a progressive web app on any device
 
 ## Installation
 
-Clear Candy uses a docker image for easy installation:
+Clearcandy uses a docker image for easy installation:
 
 ```shell
 docker run -p 80:80 ghcr.io/joshjetson/clearcandy:latest
@@ -56,7 +63,7 @@ docker run -v /media_data:/media_data -e MEDIA_PATH=/media_data ghcr.io/joshjets
 
 ### Use PostgreSQL As Database
 
-Clear Candy uses SQLite by default. For better concurrency and reliability, PostgreSQL is recommended:
+Clearcandy uses SQLite by default. For better concurrency and reliability, PostgreSQL is recommended:
 
 ```shell
 docker run -e DB_ADAPTER=postgresql -e DB_URL=postgresql://yourdatabaseurl ghcr.io/joshjetson/clearcandy:latest
@@ -79,7 +86,7 @@ docker run --user 2000:2000 -v ./storage_data:/app/storage ghcr.io/joshjetson/cl
 
 ### Logging
 
-Clear Candy logs to `STDOUT` by default. See [Docker logging docs](https://docs.docker.com/config/containers/logging/configure/).
+Clearcandy logs to `STDOUT` by default. See [Docker logging docs](https://docs.docker.com/config/containers/logging/configure/).
 
 ## Environment Variables
 
@@ -130,7 +137,7 @@ rails lint:all
 
 ## Integrations
 
-Clear Candy supports fetching artist and album images from the Discogs API. Create a Discogs API token and set it on the Settings page.
+Clearcandy supports fetching artist and album images from the Discogs API. Create a Discogs API token and set it on the Settings page.
 
 ## Credits
 
