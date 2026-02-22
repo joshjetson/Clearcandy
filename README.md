@@ -13,7 +13,7 @@ Forked from [Black Candy](https://github.com/blackcandy-org/black_candy) with th
 Clear Candy uses a docker image for easy installation:
 
 ```shell
-docker run -p 80:80 ghcr.io/blackcandy-org/blackcandy:latest
+docker run -p 80:80 ghcr.io/joshjetson/clearcandy:latest
 ```
 
 Access http://localhost or http://host-ip in a browser. Log in with the initial admin user (email: admin@admin.com, password: foobar).
@@ -26,16 +26,16 @@ Access http://localhost or http://host-ip in a browser. Log in with the initial 
 > See the [Upgrade Guide](https://github.com/blackcandy-org/blackcandy/blob/master/docs/upgrade.md)
 
 ```shell
-docker pull ghcr.io/blackcandy-org/blackcandy:latest
+docker pull ghcr.io/joshjetson/clearcandy:latest
 docker stop <your_container>
 docker rm <your_container>
-docker run <OPTIONS> ghcr.io/blackcandy-org/blackcandy:latest
+docker run <OPTIONS> ghcr.io/joshjetson/clearcandy:latest
 ```
 
 With docker compose:
 
 ```shell
-docker pull ghcr.io/blackcandy-org/blackcandy:latest
+docker pull ghcr.io/joshjetson/clearcandy:latest
 docker-compose down
 docker-compose up
 ```
@@ -45,13 +45,13 @@ docker-compose up
 ### Port Mapping
 
 ```shell
-docker run -p 3000:80 ghcr.io/blackcandy-org/blackcandy:latest
+docker run -p 3000:80 ghcr.io/joshjetson/clearcandy:latest
 ```
 
 ### Media Files Mounts
 
 ```shell
-docker run -v /media_data:/media_data -e MEDIA_PATH=/media_data ghcr.io/blackcandy-org/blackcandy:latest
+docker run -v /media_data:/media_data -e MEDIA_PATH=/media_data ghcr.io/joshjetson/clearcandy:latest
 ```
 
 ### Use PostgreSQL As Database
@@ -59,7 +59,7 @@ docker run -v /media_data:/media_data -e MEDIA_PATH=/media_data ghcr.io/blackcan
 Clear Candy uses SQLite by default. For better concurrency and reliability, PostgreSQL is recommended:
 
 ```shell
-docker run -e DB_ADAPTER=postgresql -e DB_URL=postgresql://yourdatabaseurl ghcr.io/blackcandy-org/blackcandy:latest
+docker run -e DB_ADAPTER=postgresql -e DB_URL=postgresql://yourdatabaseurl ghcr.io/joshjetson/clearcandy:latest
 ```
 
 ### How to Persist Data
@@ -68,13 +68,13 @@ All persistent data is stored in `/app/storage`:
 
 ```shell
 mkdir storage_data
-docker run -v ./storage_data:/app/storage ghcr.io/blackcandy-org/blackcandy:latest
+docker run -v ./storage_data:/app/storage ghcr.io/joshjetson/clearcandy:latest
 ```
 
 ### Running as an Arbitrary User
 
 ```shell
-docker run --user 2000:2000 -v ./storage_data:/app/storage ghcr.io/blackcandy-org/blackcandy:latest
+docker run --user 2000:2000 -v ./storage_data:/app/storage ghcr.io/joshjetson/clearcandy:latest
 ```
 
 ### Logging
