@@ -9,6 +9,7 @@ class CurrentPlaylist::SongsController < Playlists::SongsController
     @songs = @playlist.songs_with_favorite
     @should_play = params[:should_play] == "true"
     @should_play_song_id = params[:song_id].to_i if @should_play
+    @shuffle = params[:shuffle] == "true"
   end
 
   def create

@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import { dispatchEvent } from '../helper'
 import { installEventHandler } from './mixins/event_handler'
 import { installPlayingSongIndicator } from './mixins/playing_song_indicator'
 
@@ -6,7 +7,8 @@ export default class extends Controller {
   static targets = ['item']
 
   static values = {
-    shouldPlay: Boolean
+    shouldPlay: Boolean,
+    shuffle: Boolean
   }
 
   initialize () {
@@ -30,6 +32,12 @@ export default class extends Controller {
   }
 
   connect () {
+    if (this.shuffleValue) {
+      this.player.playlist.isShuffled = true
+      dispatchEvent(document, 'player:shuffle')
+      this.shuffleValue = false
+    }
+
     if (this.shouldPlayValue) {
       // If no particular song is set to play, play the first song
       this.player.skipTo(0)

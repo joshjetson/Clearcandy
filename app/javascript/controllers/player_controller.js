@@ -39,6 +39,7 @@ export default class extends Controller {
     this.handleEvent('player:end', { with: this.#setEndStatus })
     this.handleEvent('player:loaderror', { with: this.#handlePlayError })
     this.handleEvent('player:playerror', { with: this.#handlePlayError })
+    this.handleEvent('player:shuffle', { with: this.#activateShuffleMode })
   }
 
   play () {
@@ -252,6 +253,11 @@ export default class extends Controller {
     // So call Howl init function manually let document have audio unlock event when click or touch.
     // When first time user interact page the audio will be unlocked.
     new Howl({ src: [''], format: ['mp3'] }) // eslint-disable-line no-new
+  }
+
+  #activateShuffleMode = () => {
+    this.currentModeIndex = this.modes.indexOf('shuffle')
+    this.updateMode()
   }
 
   #initMode () {

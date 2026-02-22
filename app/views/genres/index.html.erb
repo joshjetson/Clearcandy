@@ -1,0 +1,26 @@
+<% page_title_tag t("label.genres") %>
+
+<div class='o-container o-container--narrow'>
+  <% unless native_app? %>
+    <h1 class='u-mb-large'><%= t("label.genres") %></h1>
+  <% end %>
+  <% if @genres.empty? %>
+    <div class='u-mt-wide'>
+      <%= empty_alert_tag has_icon: true, has_overlay: false %>
+    </div>
+  <% else %>
+    <ul class='c-list c-list--grouped'>
+      <% @genres.each do |genre| %>
+        <li class='c-list__item'>
+          <%= link_to genre_path(genre.genre), class: "o-flex o-flex--justify-between" do %>
+            <span class='o-flex o-flex--align-center u-text-size-large'>
+              <%= icon_tag "genre", class: "u-mr-tiny" %>
+              <%= genre.genre %>
+            </span>
+            <span class='c-badge'><%= format_number(genre.songs_count) %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

@@ -1,0 +1,48 @@
+<% page_title_tag @genre %>
+
+<div class='o-container o-container--narrow'>
+  <div class='u-my-large'>
+    <h1><%= @genre %></h1>
+    <div class='u-text-color-secondary'>
+      <span><%= @albums.size %> <%= t("label.albums") %></span>
+      <span>,</span>
+      <span><%= @pagy.count %> <%= t("label.tracks") %></span>
+    </div>
+    <div class='u-mt-large'>
+      <%= button_to(
+            t("button.play"),
+            current_playlist_genre_path(@genre, should_play: true),
+            method: :put,
+            form_class: "u-display-inline-block",
+            class: "c-button c-button--primary",
+            form: {
+              data: {
+                "turbo-frame" => "turbo-playlist"
+              }
+            }
+          ) %>
+      <%= button_to(
+            t("button.shuffle_play"),
+            current_playlist_genre_path(@genre, should_play: true, shuffle: true),
+            method: :put,
+            form_class: "u-display-inline-block u-ml-tiny",
+            class: "c-button c-button--secondary",
+            form: {
+              data: {
+                "turbo-frame" => "turbo-playlist"
+              }
+            }
+          ) %>
+    </div>
+  </div>
+
+  <% if @albums.any? %>
+    <div class='o-grid o-grid--shelf u-mb-large'>
+      <%= render partial: "albums/album", collection: @albums %>
+    </div>
+  <% end %>
+
+  <% if @songs.any? %>
+    <%= render partial: "songs/table", locals: { songs: @songs, pagy: @pagy } %>
+  <% end %>
+</div>

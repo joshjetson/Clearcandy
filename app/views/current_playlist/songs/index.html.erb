@@ -1,6 +1,7 @@
 <div
   data-controller='current-playlist-songs'
-  data-current-playlist-songs-should-play-value='<%= @should_play %>'>
+  data-current-playlist-songs-should-play-value='<%= @should_play %>'
+  data-current-playlist-songs-shuffle-value='<%= @shuffle %>'>
   <% if @songs.empty? %>
     <%= empty_alert_tag %>
   <% else %>

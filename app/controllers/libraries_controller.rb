@@ -6,5 +6,6 @@ class LibrariesController < ApplicationController
     @artists_count = Artist.count
     @songs_count = Song.count
     @playlists_count = Current.user.playlists_with_favorite.count
+    @genres_count = Album.where.not(genre: [nil, ""]).distinct.count(:genre)
   end
 end

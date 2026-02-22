@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :artists, only: [ :index, :show, :update ]
   resources :songs, only: [ :index ]
   resources :albums, only: [ :index, :show, :update ]
+  resources :genres, only: [ :index, :show ]
 
   resources :users, except: [ :show ] do
     resource :setting, only: [ :update ], module: "users"
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
       collection do
         delete "/", action: :destroy_all
         resources :albums, only: :update, module: :songs
+        resources :genres, only: :update, module: :songs
         resources :playlists, only: :update, module: :songs
       end
     end

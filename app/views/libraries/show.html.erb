@@ -21,6 +21,15 @@
       <% end %>
     </li>
     <li class='c-list__item'>
+      <%= link_to genres_path, class: "o-flex o-flex--justify-between" do %>
+        <span class='o-flex o-flex--align-center u-text-size-large'>
+          <%= icon_tag "genre", class: "u-mr-tiny" %>
+          <%= t("label.genres") %>
+        </span>
+        <span class='c-badge'><%= format_number(@genres_count) %></span>
+      <% end %>
+    </li>
+    <li class='c-list__item'>
       <%= link_to playlists_path, class: "o-flex o-flex--justify-between" do %>
         <span class='o-flex o-flex--align-center u-text-size-large'>
           <%= icon_tag "queue-music", class: "u-mr-tiny" %>
