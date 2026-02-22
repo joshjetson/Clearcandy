@@ -13,7 +13,7 @@ class CurrentPlaylist::Songs::GenresController < ApplicationController
     @should_play_song_id = nil
     @shuffle = params[:shuffle] == "true"
 
-    render "current_playlist/songs/index", layout: "playlist"
+    render "current_playlist/songs/index", layout: "playlist", formats: [:html]
   end
 
   private
