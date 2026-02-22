@@ -64,3 +64,6 @@ yarn-debug.log*
 !/tmp/storage/.keep
 
 /.kamal
+
+# Local project notes
+local.md
