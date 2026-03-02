@@ -12,6 +12,8 @@ export default class extends Controller {
     if (!('mediaSession' in navigator)) { return }
 
     this.handleEvent('player:playing', { with: this.#setPlayingStatus })
+    this.handleEvent('player:pause', { with: this.#setPausedStatus })
+    this.handleEvent('player:stop', { with: this.#setStoppedStatus })
 
     Object.entries(this.mediaSessionActions).forEach(([actionName, actionHandler]) => {
       try {
@@ -23,8 +25,17 @@ export default class extends Controller {
   }
 
   #setPlayingStatus = () => {
+    navigator.mediaSession.playbackState = 'playing'
     this.#updateMetadata()
     this.#updatePositionState()
+  }
+
+  #setPausedStatus = () => {
+    navigator.mediaSession.playbackState = 'paused'
+  }
+
+  #setStoppedStatus = () => {
+    navigator.mediaSession.playbackState = 'none'
   }
 
   #updateMetadata = () => {
