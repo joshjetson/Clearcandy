@@ -36,6 +36,8 @@ export default class extends Controller {
       this.player.playlist.isShuffled = true
       dispatchEvent(document, 'player:shuffle')
       this.shuffleValue = false
+    } else if (this.shouldPlayValue) {
+      dispatchEvent(document, 'player:unshuffle')
     }
 
     if (this.shouldPlayValue) {

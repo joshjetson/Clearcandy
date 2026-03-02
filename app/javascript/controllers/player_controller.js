@@ -40,6 +40,7 @@ export default class extends Controller {
     this.handleEvent('player:loaderror', { with: this.#handlePlayError })
     this.handleEvent('player:playerror', { with: this.#handlePlayError })
     this.handleEvent('player:shuffle', { with: this.#activateShuffleMode })
+    this.handleEvent('player:unshuffle', { with: this.#deactivateShuffleMode })
   }
 
   play () {
@@ -257,6 +258,11 @@ export default class extends Controller {
 
   #activateShuffleMode = () => {
     this.currentModeIndex = this.modes.indexOf('shuffle')
+    this.updateMode()
+  }
+
+  #deactivateShuffleMode = () => {
+    this.currentModeIndex = 0
     this.updateMode()
   }
 
