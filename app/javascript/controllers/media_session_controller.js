@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
 import { installEventHandler } from './mixins/event_handler'
+import { isiOSApp } from '../helper'
 
 export default class extends Controller {
   DEFAULT_SKIP_TIME = 10
@@ -19,7 +20,7 @@ export default class extends Controller {
       try {
         navigator.mediaSession.setActionHandler(actionName, actionHandler)
       } catch (error) {
-        // The media session ation is not supported.
+        // The media session action is not supported.
       }
     })
   }
@@ -32,6 +33,7 @@ export default class extends Controller {
 
   #setPausedStatus = () => {
     navigator.mediaSession.playbackState = 'paused'
+    this.#updatePositionState()
   }
 
   #setStoppedStatus = () => {
@@ -54,10 +56,18 @@ export default class extends Controller {
   #updatePositionState = () => {
     if (!('setPositionState' in navigator.mediaSession)) { return }
 
+    const duration = this.player.duration
+
+    // setPositionState throws if duration is missing/zero or position is
+    // out of range, which would break the whole handler. Guard against it.
+    if (!duration || !isFinite(duration)) { return }
+
+    const position = Math.min(Math.max(this.player.currentTime, 0), duration)
+
     navigator.mediaSession.setPositionState({
-      duration: this.currentSong.duration,
-      playbackRate: this.currentSong.howl.rate(),
-      position: this.currentSong.howl.seek()
+      duration,
+      playbackRate: this.player.playbackRate,
+      position
     })
   }
 
@@ -84,14 +94,14 @@ export default class extends Controller {
   #seekBackward = (event) => {
     const skipTime = event.seekOffset || this.DEFAULT_SKIP_TIME
 
-    this.player.seek(this.currentSong.howl.seek() - skipTime)
+    this.player.seek(this.player.currentTime - skipTime)
     this.#updatePositionState()
   }
 
   #seekForward = (event) => {
     const skipTime = event.seekOffset || this.DEFAULT_SKIP_TIME
 
-    this.player.seek(this.currentSong.howl.seek() + skipTime)
+    this.player.seek(this.player.currentTime + skipTime)
     this.#updatePositionState()
   }
 
@@ -101,16 +111,30 @@ export default class extends Controller {
   }
 
   get mediaSessionActions () {
-    return {
+    const actions = {
       play: this.#play,
       pause: this.#pause,
       previoustrack: this.#previous,
       nexttrack: this.#next,
       stop: this.#stop,
-      seekbackward: this.#seekBackward,
-      seekforward: this.#seekForward,
       seekto: this.#seekTo
     }
+
+    // On iOS, registering seekbackward/seekforward handlers causes the
+    // lock-screen and Bluetooth Next/Previous track buttons to disappear.
+    // Skip them on iOS so users keep working track-change controls.
+    if (!this.#isiOS) {
+      actions.seekbackward = this.#seekBackward
+      actions.seekforward = this.#seekForward
+    }
+
+    return actions
+  }
+
+  get #isiOS () {
+    return isiOSApp() ||
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
   }
 
   get player () {
