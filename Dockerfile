@@ -61,8 +61,11 @@ COPY --from=tianon/gosu /gosu /usr/local/bin/
 COPY --from=builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
 COPY --from=builder --chown=app:app /app/ /app/
 
-# Forwards media listener logs to stdout so they can be captured in docker logs.
-RUN ln -sf /dev/stdout /app/log/media_listener_production.log \
+# Create a real log file for the media listener daemon.
+# A symlink to /dev/stdout breaks because the daemons gem forks and detaches,
+# making /proc/self/fd/1 inaccessible in the child process.
+RUN touch /app/log/media_listener_production.log \
+  && chown app:app /app/log/media_listener_production.log \
   && find /app/tmp -type d -exec chmod 1777 '{}' +
 
 ENTRYPOINT ["./bin/docker-entrypoint"]
