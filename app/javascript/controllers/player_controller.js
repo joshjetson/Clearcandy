@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus'
-import { Howl } from 'howler'
 import { formatDuration, dispatchEvent } from '../helper'
 import { installEventHandler } from './mixins/event_handler'
 
@@ -125,7 +124,7 @@ export default class extends Controller {
   }
 
   get currentTime () {
-    const currentTime = this.currentSong.howl ? this.currentSong.howl.seek() : 0
+    const currentTime = this.player.currentTime
     return (typeof currentTime === 'number') ? Math.round(currentTime) : 0
   }
 
@@ -212,7 +211,7 @@ export default class extends Controller {
     this._errorRetryCount++
 
     if (this._errorRetryCount <= 1) {
-      // Retry once — the Howl instance was already unloaded in player.js
+      // Retry once — reload the current track on the persistent audio element.
       setTimeout(() => { this.player.play() }, 1000)
     } else {
       // Give up on this song, skip to next
@@ -250,10 +249,9 @@ export default class extends Controller {
   }
 
   #initPlayer () {
-    // Hack for Safari issue of can not play song when first time page loaded.
-    // So call Howl init function manually let document have audio unlock event when click or touch.
-    // When first time user interact page the audio will be unlocked.
-    new Howl({ src: [''], format: ['mp3'] }) // eslint-disable-line no-new
+    // The persistent <audio> element in Player is unlocked naturally the
+    // first time the user taps play (audio.play() runs inside the user
+    // gesture), so no separate unlock hack is needed here.
   }
 
   #activateShuffleMode = () => {

@@ -40,7 +40,7 @@ class Api::V1::TranscodedStreamControllerTest < ActionDispatch::IntegrationTest
       get new_api_v1_transcoded_stream_url(song_id: songs(:flac_sample).id), headers: api_token_header(@user)
 
       create_tmp_file(format: "mp3") do |tmp_file_path|
-        File.write(tmp_file_path, response.body)
+        File.binwrite(tmp_file_path, response.body)
 
         assert_equal 128, audio_bitrate(tmp_file_path)
       end
