@@ -7,7 +7,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:flac_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 
@@ -19,7 +19,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:wav_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 
@@ -31,7 +31,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:ogg_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 
@@ -43,7 +43,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:opus_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 
@@ -55,7 +55,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:oga_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 
@@ -67,7 +67,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:wma_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 
@@ -81,7 +81,7 @@ class StreamTest < ActiveSupport::TestCase
     create_tmp_file(format: "mp3") do |tmp_file_path|
       stream = Stream.new(songs(:flac_sample))
 
-      File.open(tmp_file_path, "w") do |file|
+      File.open(tmp_file_path, "wb") do |file|
         stream.each { |data| file.write data }
       end
 

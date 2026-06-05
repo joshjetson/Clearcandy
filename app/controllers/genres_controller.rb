@@ -2,7 +2,7 @@
 
 class GenresController < ApplicationController
   def index
-    @genres = Album.where.not(genre: [nil, ""])
+    @genres = Album.where.not(genre: [ nil, "" ])
       .group(:genre)
       .select("genre, COUNT(DISTINCT albums.id) as albums_count, COUNT(songs.id) as songs_count")
       .joins(:songs)
